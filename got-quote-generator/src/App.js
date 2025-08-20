@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import QuoteCard from './QuoteCard';
 
 const gotQuotes = [
   { id: 1, quote: "Der Winter naht.", character: "Ned Stark", epic: true },
@@ -24,24 +24,6 @@ const gotQuotes = [
   { id: 20, quote: "Alles, was wir tun, ist in Bewegung.", character: "Varys", epic: false }
 ];
 
-const quoteStyle = {
-  fontStyle: "italic",
-  color: "#eb9c1efd",
-  fontSize: "1.5em",
-  marginBottom: "10px",
-  borderLeft: "4px solid #f8c471",
-  paddingLeft: "15px"
-};
-
-const characterStyle = {
-  fontSize: '0.8em',
-  color: '#4a4a4a',   // Dunkelgrau für Text (Schattenwolf)
-  marginTop: '5px',
-  display: 'block',
-  backgroundColor: '#f5f5f5', // Hellgrau/Weiß für Hintergrund
-  padding: '4px 6px',
-  borderRadius: '6px'
-};
 
 function App() {
   return (
@@ -52,15 +34,7 @@ function App() {
       </header>
       <main>
         {gotQuotes.map(q => (
-          <figure key={q.id} style={{ margin: '20px 0' }}>
-            <blockquote style={quoteStyle}>
-              "{q.quote}"
-            </blockquote>
-            <figcaption style={characterStyle}>
-              - {q.character}
-              {q.epic && <span style={{ marginLeft: '10px' }}>🌟</span>}
-            </figcaption>
-          </figure>
+          <QuoteCard key={q.id} quoteText={q.quote} characterName={q.character} isQuoteEpic={q.epic} />
         ))}
       </main>
     </div>
