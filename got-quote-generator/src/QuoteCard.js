@@ -19,15 +19,15 @@ import React from "react";
     borderRadius: '6px'
   };
 
-function QuoteCard({ props }) {
+function QuoteCard({ quoteText, characterName, isQuoteEpic }) {
   return (
     <figure style={{ margin: '20px 0' }}>
       <blockquote style={quoteStyle}>
-        "{props.quoteText}"
+        "{quoteText}"
       </blockquote>
       <figcaption style={characterStyle}>
-        - {props.characterName}
-        {props.isQuoteEpic && <span style={{ marginLeft: '10px' }}>🌟</span>}
+        - {characterName}
+        {isQuoteEpic && <span style={{ marginLeft: '10px' }}>🌟</span>}
       </figcaption>
     </figure>
   );
