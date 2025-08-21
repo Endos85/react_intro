@@ -1,5 +1,5 @@
 // QuoteCard.js
-import React from "react";
+import React, { useState } from "react";
 
 // Hausfarben und lesbare Textfarben
 function getHouseStyle(house) {
@@ -20,65 +20,65 @@ function getHouseStyle(house) {
   return houseStyles[house] || { backgroundColor: "#f8f8f8ff", color: "black" }; // Default
 }
 
-function QuoteCard({ quoteText, characterName, isQuoteEpic, house, onLike , onDislike}) {
+function QuoteCard({ quoteText, characterName, isQuoteEpic, house, onNext }) {
+  const [showEpicText, setShowEpicText] = useState(false);
+
   const houseStyle = getHouseStyle(house);
 
+  const cardStyle = {
+    ...houseStyle,
+    padding: "20px",
+    borderRadius: "10px",
+    maxWidth: "600px",
+    margin: "0 auto",
+    textAlign: "center",
+    boxShadow: "0 4px 15px rgba(0,0,0,0.4)",
+  };
+
+  const quoteStyle = {
+    fontStyle: "italic",
+    fontSize: "2em",
+    fontWeight: "bold",
+    marginBottom: "20px",
+  };
+
+  const characterStyle = {
+    fontSize: "1em",
+    marginTop: "10px",
+    display: "block",
+  };
+
+  const buttonContainer = {
+    marginTop: "20px",
+    display: "flex",
+    gap: "15px",
+    justifyContent: "center",
+  };
+
   return (
-    <figure
-      style={{
-        margin: "20px 0",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
-        maxWidth: "600px",
-        backgroundColor: houseStyle.backgroundColor,
-        color: houseStyle.color,
-      }}
-    >
-      <blockquote
-        style={{
-          fontStyle: "italic",
-          fontSize: "1.5em",
-          marginBottom: "10px",
-        }}
-      >
+    <figure style={cardStyle}>
+      <blockquote style={quoteStyle}>
         "{quoteText}"
       </blockquote>
-      <figcaption
-        style={{
-          fontSize: "0.9em",
-          marginTop: "5px",
-          display: "block",
-        }}
-      >
-        – {characterName} {isQuoteEpic && <span>🌟</span>}
+      <figcaption style={characterStyle}>
+        - {characterName} ({house})
+        {isQuoteEpic && <span style={{ marginLeft: "10px" }}>🌟</span>}
       </figcaption>
-      <button
-          onClick={onLike}
-          style={{
-            padding: "8px 16px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#27ae60",
-            color: "white",
-            cursor: "pointer"
-          }}
-        >
-          👍 Like
-        </button>
-        <button
-          onClick={onDislike}
-          style={{
-            padding: "8px 16px",
-            borderRadius: "8px",
-            border: "none",
-            backgroundColor: "#c0392b",
-            color: "white",
-            cursor: "pointer"
-          }}
-        >
-          👎 Dislike
-        </button>
+
+      {isQuoteEpic && showEpicText && (
+        <p style={{ marginTop: "15px", fontWeight: "bold", fontSize: "1.2em" }}>
+          Das ist ein wahrlich episches Zitat! 👑
+        </p>
+      )}
+
+      <div style={buttonContainer}>
+        <button onClick={onNext}>Nächstes Zitat ➡️</button>
+        {isQuoteEpic && (
+          <button onClick={() => setShowEpicText(!showEpicText)}>
+            {showEpicText ? "Hinweis ausblenden" : "Episch zeigen 👑"}
+          </button>
+        )}
+      </div>
     </figure>
   );
 }

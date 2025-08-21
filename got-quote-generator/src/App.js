@@ -51,22 +51,12 @@ function App() {
     gotQuotes[Math.floor(Math.random() * gotQuotes.length)]
   );
 
-  const getNextQuote = () => {
+  const handleNext = () => {
     let nextQuote;
     do {
       nextQuote = gotQuotes[Math.floor(Math.random() * gotQuotes.length)];
     } while (nextQuote.id === currentQuote.id);
     setCurrentQuote(nextQuote);
-  };
-
-  const handleLike = () => {
-    console.log(`${currentQuote.character} wurde geliked!`);
-    getNextQuote();
-  };
-
-  const handleDislike = () => {
-    console.log(`${currentQuote.character} wurde disliked!`);
-    getNextQuote();
   };
 
   return (
@@ -82,8 +72,7 @@ function App() {
           characterName={currentQuote.character}
           isQuoteEpic={currentQuote.epic}
           house={currentQuote.house}
-          onLike={handleLike}
-          onDislike={handleDislike}
+          onNext={handleNext}
         />
       </main>
     </div>
