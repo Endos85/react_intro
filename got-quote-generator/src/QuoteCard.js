@@ -1,24 +1,39 @@
 // QuoteCard.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react';
 
 // Hausfarben und lesbare Textfarben
-function getHouseStyle(house) {
-  const houseStyles = {
-    Stark: { backgroundColor: "#2c3e50", color: "white" },       // Dunkelgrau, weiße Schrift
-    Lannister: { backgroundColor: "#b03a2e", color: "white" },   // Rotgold, weiße Schrift
-    Targaryen: { backgroundColor: "#641e16", color: "white" },   // Dunkelrot, weiße Schrift
-    Baratheon: { backgroundColor: "#f1c40f", color: "black" },   // Gelb, schwarze Schrift
-    Greyjoy: { backgroundColor: "#1a252f", color: "gold" },      // Schwarz, goldene Schrift
-    Tarth: { backgroundColor: "#2980b9", color: "white" },       // Blau, weiße Schrift
-    Clegane: { backgroundColor: "#7d6608", color: "white" },     // Braun/Gold, weiße Schrift
-    Baelish: { backgroundColor: "#145a32", color: "white" },     // Dunkelgrün, weiße Schrift
-    "Faceless Men": { backgroundColor: "#424949", color: "white" }, // Grau, weiße Schrift
-    Asshai: { backgroundColor: "#512e5f", color: "white" },      // Dunkellila, weiße Schrift
-    None: { backgroundColor: "#7b7d7d", color: "white" },        // Neutral Grau
-  };
-
-  return houseStyles[house] || { backgroundColor: "#f8f8f8ff", color: "black" }; // Default
-}
+const getHouseStyle = (house) => {
+  switch (house) {
+    case "Stark":
+      return { backgroundColor: "#555", color: "#fff" }; // Grau / Weiß
+    case "Lannister":
+      return { backgroundColor: "#A41E22", color: "#FFD700" }; // Rot / Gold
+    case "Targaryen":
+      return { backgroundColor: "#000", color: "#E60026" }; // Schwarz / Rot
+    case "Baratheon":
+      return { backgroundColor: "#FFD700", color: "#000" }; // Gold / Schwarz
+    case "Greyjoy":
+      return { backgroundColor: "#2F4F4F", color: "#FFD700" }; // Dunkelgrau / Gold
+    case "Martell":
+      return { backgroundColor: "#FF7518", color: "#000" }; // Orange / Schwarz
+    case "Tyrell":
+      return { backgroundColor: "#228B22", color: "#fff" }; // Grün / Weiß
+    case "Arryn":
+      return { backgroundColor: "#1E90FF", color: "#fff" }; // Blau / Weiß
+    case "Tully":
+      return { backgroundColor: "#003366", color: "#FF3333" }; // Dunkelblau / Rot
+    case "Clegane":
+      return { backgroundColor: "#333", color: "#FFD700" }; // Schwarzgrau / Gold
+    case "Tarly":
+      return { backgroundColor: "#556B2F", color: "#fff" }; // Dunkelgrün / Weiß
+    case "Asshai":
+      return { backgroundColor: "#4B0082", color: "#FFD700" }; // Indigo / Gold
+    case "Faceless Men":
+      return { backgroundColor: "#444", color: "#fff" }; // Dunkelgrau / Weiß
+    default:
+      return { backgroundColor: "#222", color: "#fff" }; // Fallback
+  }
+};
 
 function QuoteCard({ quoteText, characterName, isQuoteEpic, house, onNext }) {
   const [showEpicText, setShowEpicText] = useState(false);
