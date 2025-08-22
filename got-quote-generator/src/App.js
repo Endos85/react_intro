@@ -1,75 +1,33 @@
-// App.js
 import './App.css';
-import React, { useState, useEffect } from 'react';
-import gotQuotes from "./gotQuotes";
-import QuoteCard from './QuoteCard';
+import { Routes, Route, Link } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
-  const [currentQuote, setCurrentQuote] = useState(
-    gotQuotes[Math.floor(Math.random() * gotQuotes.length)]
-  );
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [fetchedQuote, setFetchedQuote] = useState(null);
-
-  const handleNext = () => {
-    let nextQuote;
-    do {
-      nextQuote = gotQuotes[Math.floor(Math.random() * gotQuotes.length)];
-    } while (nextQuote.id === currentQuote.id);
-    setCurrentQuote(nextQuote);
-  };
-
-  useEffect(() => {
-    const fetchQuote = async () => {
-      setIsLoading(true);
-      setError(null);
-
-      try {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        //if (Math.random() < 0.5) {
-        //  throw new Error("!Netzwerkfehler!");
-        //}
-        setFetchedQuote(currentQuote);
-      } catch (err) {
-        console.error("Fehler beim Abrufen des Zitats:", err);
-        setError("Fehler beim Abrufen des Zitats! Bitte versuchen Sie es erneut.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchQuote();
-  }, [currentQuote]);
-
   return (
     <div className="App">
       <header className="App-header">
         <h1>Game of Thrones Zitate Generator</h1>
         <p>Ein Ort für Weisheit (und Sarkasmus) aus Westeros.</p>
+        <nav className='main-nav'>
+          <ul>
+            <li><Link to="/" className='nav-link'>Home</Link></li>
+            <li><Link to="/about" className='nav-link'>Über uns</Link></li>
+          </ul>
+        </nav>
       </header>
-      <main>
-        {isLoading && (
-          <p style={{ color: '#ccc', fontSize: '1.2em' }}>
-            Lade Zitat... <span role="img" aria-label="loading spinner">⏳</span>
-          </p>
-        )}
-        {error && (
-          <p style={{ color: 'red', fontSize: '1.2em' }}>
-            Fehler: {error} <span role="img" aria-label="error icon">❌</span>
-          </p>
-        )}
-        {!isLoading && !error && fetchedQuote && (
-          <QuoteCard
-            key={fetchedQuote.id}
-            quoteText={fetchedQuote.quote}
-            characterName={fetchedQuote.character}
-            isQuoteEpic={fetchedQuote.epic}
-            house={fetchedQuote.house}
-            onNext={handleNext}
-          />
-        )}
+
+      <main className='app-main-content'>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="*" element={<h2 style={{color: 'white'}}>404 - Seite nicht gefunden!</h2>} />
+        </Routes>
       </main>
+
+      <footer className='app-footer'>
+        <p>© 2025 Game of Thrones Zitate Generator. Alle Rechte vorbehalten.</p>
+      </footer>
     </div>
   );
 }
